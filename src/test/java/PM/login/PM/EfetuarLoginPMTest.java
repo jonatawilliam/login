@@ -113,5 +113,29 @@ public class EfetuarLoginPMTest {
         PagePM pagePM = efetuarLoginPM.pressLogin();
         assertTrue( pagePM instanceof NormalUserMainPagePM );
         assertEquals("user", pagePM.getLoggedUser().getUsername());
-    }    
+    } 
+    
+    @Test
+    public void testWrongPassword3X() {
+        UserDAO userDaoMock = mock(UserDAO.class);
+        when(userDaoMock.getByName("andre"))
+                .thenReturn( new User("andre", "1234", UserType.NORMALUSER) );
+        
+        PerformLoginPM efetuarLoginPM = new PerformLoginPM();
+        efetuarLoginPM.setLogin("andre");
+        efetuarLoginPM.setPassword("123");
+
+        efetuarLoginPM.setUserDao(userDaoMock);
+        int cont = 0;
+        
+        assertEquals(3, efetuarLoginPM.setContador());
+        
+        
+        try {
+            efetuarLoginPM.pressLogin();
+            fail();
+        } catch(Exception e) {
+            assertEquals("Wrong password", e.getMessage());
+        }
+    } 
 }
