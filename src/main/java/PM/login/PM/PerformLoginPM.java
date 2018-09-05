@@ -48,6 +48,7 @@ public class PerformLoginPM {
     public PagePM pressLogin() throws Exception {
         login = login.trim();
         password = password.trim();
+        contador = contador;
         if(login.isEmpty() || password.isEmpty())
             throw new Exception("Empty fields");
         
@@ -55,8 +56,15 @@ public class PerformLoginPM {
         if(user == null)
             throw new Exception("Inexistent username");
         
-        if(! user.getPassword().equals(password))
-            throw new Exception("Wrong password");
+        if(! user.getPassword().equals(password)){
+            user.setContador(user.getContador() + 1);
+            if(user.getContador() == 3){    
+                user.setContador(0);
+                throw new Exception("User blocked! Contact admin.");
+            } else {
+                throw new Exception("Wrong password");
+            }
+        }
         
         PagePM pagePM = null;
         if(user.getType() == UserType.ADMIN)

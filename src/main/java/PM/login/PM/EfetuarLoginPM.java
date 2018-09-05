@@ -48,8 +48,16 @@ public class EfetuarLoginPM {
         if(user == null)
             throw new Exception("Inexistent username");
         
-        if(! user.getPassword().equals(password))
-            throw new Exception("Wrong password");
+        if(! user.getPassword().equals(password)){
+            user.setContador(user.getContador() + 1);
+            if(user.getContador() == 3){    
+                user.setContador(0);
+                throw new Exception("User blocked! Contact admin.");
+            } else {
+                throw new Exception("Wrong password");
+            }
+            
+        }
         
         AdminMainPagePM adminMainPagePM = new AdminMainPagePM();
         adminMainPagePM.setLoggedUser(user);

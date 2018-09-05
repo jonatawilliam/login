@@ -7,6 +7,15 @@ package PM.login.model;
 public class User {
     private String username, password;
     private UserType type;
+    private int contador;
+
+    public int getContador() {
+        return contador;
+    }
+
+    public void setContador(int contador) {
+        this.contador = contador;
+    }
     
     public User(String username, String password, UserType type) {
         this.username = username;
