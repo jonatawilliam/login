@@ -12,6 +12,11 @@ public class PerformLoginPM {
     String login;
     String password;
     UserDAO userDao;
+    int contador;
+    
+     public int setContador(){
+        return 3;
+    }
 
     public PerformLoginPM() {
         login = "";
