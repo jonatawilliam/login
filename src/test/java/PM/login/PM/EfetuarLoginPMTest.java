@@ -117,7 +117,7 @@ public class EfetuarLoginPMTest {
     }
 
     @Test
-    public void testWrongPassword3X() {
+    public void testWrongPassword3X() throws Exception {
         UserDAO userDaoMock = mock(UserDAO.class);
         when(userDaoMock.getByName("andre"))
                 .thenReturn(new User("andre", "1234", UserType.NORMALUSER));
@@ -128,22 +128,22 @@ public class EfetuarLoginPMTest {
 
         efetuarLoginPM.setUserDao(userDaoMock);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             try {
                 efetuarLoginPM.pressLogin();
-                if (i == 3) {
-                    fail();
-                }
+                fail();
             } catch (Exception e) {
-                if (i == 2) {
+                if (efetuarLoginPM.getContador() >= 3){
                     assertEquals("User blocked! Contact admin.", e.getMessage());
+                } else {
+                    assertEquals("Wrong password", e.getMessage()); 
                 }
             }
         }
     }
     
     @Test
-    public void testWrong2xPassowordPassIn3(){
+    public void testWrong2xPassowordPassIn3() throws Exception{
         UserDAO userDaoMock = mock(UserDAO.class);
         when(userDaoMock.getByName("andre"))
                 .thenReturn(new User("andre", "1234", UserType.NORMALUSER));
@@ -154,18 +154,17 @@ public class EfetuarLoginPMTest {
 
         efetuarLoginPM.setUserDao(userDaoMock);
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             try {
                 efetuarLoginPM.pressLogin();
-                if (i == 3) {
-                    fail();
-                }
+                fail();
             } catch (Exception e) {
-                assertEquals("Wrong Password", e.getMessage());  
+                if (efetuarLoginPM.getContador() >= 3){
+                    assertEquals("User blocked! Contact admin.", e.getMessage());
+                } else {
+                    assertEquals("Wrong password", e.getMessage()); 
+                }
             }
-            
-            efetuarLoginPM.setPassword("1234");
-            Assert.assertEquals(efetuarLoginPM.pressLogin(), NormalUserMainPagePM.class);
         }
     }
 }

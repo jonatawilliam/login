@@ -50,8 +50,7 @@ public class EfetuarLoginPM {
         
         if(! user.getPassword().equals(password)){
             user.setContador(user.getContador() + 1);
-            if(user.getContador() == 3){    
-                user.setContador(0);
+            if(user.getContador() >= 3){    
                 throw new Exception("User blocked! Contact admin.");
             } else {
                 throw new Exception("Wrong password");
