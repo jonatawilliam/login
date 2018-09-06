@@ -133,7 +133,7 @@ public class EfetuarLoginPMTest {
                 efetuarLoginPM.pressLogin();
                 fail();
             } catch (Exception e) {
-                if (efetuarLoginPM.getContador() >= 3){
+                if (efetuarLoginPM.getBlocked() == true){
                     assertEquals("User blocked! Contact admin.", e.getMessage());
                 } else {
                     assertEquals("Wrong password", e.getMessage()); 
@@ -159,7 +159,7 @@ public class EfetuarLoginPMTest {
                 efetuarLoginPM.pressLogin();
                 fail();
             } catch (Exception e) {
-                if (efetuarLoginPM.getContador() >= 3){
+                if (efetuarLoginPM.getBlocked() == true){
                     assertEquals("User blocked! Contact admin.", e.getMessage());
                 } else {
                     assertEquals("Wrong password", e.getMessage()); 

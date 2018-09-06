@@ -7,14 +7,14 @@ package PM.login.model;
 public class User {
     private String username, password;
     private UserType type;
-    private int contador;
+    private boolean blocked = false;
 
-    public int getContador() {
-        return contador;
+    public boolean getBlocked() {
+        return blocked;
     }
 
-    public void setContador(int contador) {
-        this.contador = contador;
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
     
     public User(String username, String password, UserType type) {

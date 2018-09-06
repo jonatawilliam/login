@@ -12,13 +12,14 @@ public class PerformLoginPM {
     String login;
     String password;
     UserDAO userDao;
+    int countBlocked;
     
-    public int getContador() throws Exception{
+    public boolean getBlocked() throws Exception{
         User user = userDao.getByName(login);
         if(user == null) {
             throw new Exception("Inexistent username");
         } else {
-            return user.getContador();
+            return user.getBlocked();
         }     
     }
 
@@ -52,6 +53,7 @@ public class PerformLoginPM {
     public PagePM pressLogin() throws Exception {
         login = login.trim();
         password = password.trim();
+        countBlocked = 0;
         if(login.isEmpty() || password.isEmpty())
             throw new Exception("Empty fields");
         
@@ -60,8 +62,9 @@ public class PerformLoginPM {
             throw new Exception("Inexistent username");
         
         if(!user.getPassword().equals(password)){
-            user.setContador(user.getContador() + 1);
-            if(user.getContador() >= 3){    
+            countBlocked =+ countBlocked;
+            if(countBlocked  >= 3){    
+                user.setBlocked(true);
                 throw new Exception("User blocked! Contact admin.");
             } else {
                 throw new Exception("Wrong password");
